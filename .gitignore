@@ -1,0 +1,53 @@
+### Gradle ###
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+out/
+
+### Eclipse ###
+.project
+.classpath
+.c9/
+.settings/
+bin/
+
+### VSCode ###
+.vscode/
+
+### OS 별 시스템 파일 ###
+.DS_Store
+Thumbs.db
+
+### Logs ###
+*.log
+
+### Test reports ###
+**/test-results/
+**/test-output/
+
+### Local environment configs ###
+*.env
+.env.*
+
+### Java ###
+*.class
+
+### Generated files ###
+**/generated/
+
+### Mac 관련 ###
+*.swp
+*.swo
+
+### 기타 (원하는 경우) ###
+*.bak
+*.tmp
+
+# 사용자별 적용 제외
+!.gitignore

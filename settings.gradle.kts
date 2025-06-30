@@ -1,2 +1,12 @@
 rootProject.name = "spring--rate-limit-and-metrics"
-// include("rate-limiter-core", "rate-limiter-sample-app")
+
+include(
+    "rate-limit-core"
+    , "rate-limit-algorithms"
+    , "rate-limit-client"
+    , "rate-limit-http"
+    , "rate-limit-metrics"
+    , "rate-limit-sample-app"
+    , "rate-limit-starter"
+    , "rate-limit-storage"
+)

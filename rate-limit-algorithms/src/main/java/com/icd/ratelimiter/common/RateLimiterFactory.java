@@ -1,9 +1,9 @@
-package com.inc.ratelimiter.common;
+package com.icd.ratelimiter.common;
 
-import com.inc.ratelimiter.RateLimiter;
-import com.inc.ratelimiter.storage.RateLimiterStorage;
-import com.inc.ratelimiter.fixedWindow.FixedWindowRateLimiter;
-import com.inc.ratelimiter.rule.RateLimitRule;
+import com.icd.ratelimiter.RateLimiter;
+import com.icd.ratelimiter.storage.RateLimiterStorage;
+import com.icd.ratelimiter.fixedWindow.FixedWindowRateLimiter;
+import com.icd.ratelimiter.rule.RateLimitRule;
 
 public class RateLimiterFactory {
 

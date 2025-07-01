@@ -1,9 +1,9 @@
-package com.inc.ratelimiter.fixedWindow;
+package com.icd.ratelimiter.fixedWindow;
 
-import com.inc.ratelimiter.RateLimiter;
-import com.inc.ratelimiter.storage.RateLimiterStorage;
-import com.inc.ratelimiter.RequestContext;
-import com.inc.ratelimiter.rule.RateLimitRule;
+import com.icd.ratelimiter.RateLimiter;
+import com.icd.ratelimiter.storage.RateLimiterStorage;
+import com.icd.ratelimiter.RequestContext;
+import com.icd.ratelimiter.rule.RateLimitRule;
 
 import java.time.Instant;
 

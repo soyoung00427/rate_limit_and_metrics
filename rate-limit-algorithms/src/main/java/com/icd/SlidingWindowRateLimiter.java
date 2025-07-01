@@ -3,6 +3,7 @@ package com.icd;
 import com.icd.ratelimiter.RateLimiter;
 import com.icd.ratelimiter.RequestContext;
 
+import java.time.Instant;
 import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
@@ -21,13 +22,8 @@ public class SlidingWindowRateLimiter implements RateLimiter {
     }
 
     @Override
-    public boolean allow(RequestContext context) {
-        return tryAcquire();
-    }
-
-    //
-    public synchronized boolean tryAcquire() {
-        long now = System.currentTimeMillis();
+    public synchronized boolean allow(RequestContext context) {
+        long now = Instant.now().toEpochMilli();
 
         // 현재 시간 기준으로 오래된 요청 삭제하기
         cleanupOldRequests(now);
@@ -47,6 +43,5 @@ public class SlidingWindowRateLimiter implements RateLimiter {
             requestTimestamps.pollFirst(); // 가장 오래된 요청 제거
         }
     }
-
 
 }

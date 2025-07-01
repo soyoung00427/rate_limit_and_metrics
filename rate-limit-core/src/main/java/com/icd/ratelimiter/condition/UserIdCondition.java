@@ -1,6 +1,6 @@
-package com.inc.ratelimiter.condition;
+package com.icd.ratelimiter.condition;
 
-import com.inc.ratelimiter.RequestContext;
+import com.icd.ratelimiter.RequestContext;
 
 /**
  * 사용자 ID 기반 조건 구현체

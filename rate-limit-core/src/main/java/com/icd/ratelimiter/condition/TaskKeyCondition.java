@@ -1,6 +1,6 @@
-package com.inc.ratelimiter.condition;
+package com.icd.ratelimiter.condition;
 
-import com.inc.ratelimiter.RequestContext;
+import com.icd.ratelimiter.RequestContext;
 
 import java.util.Objects;
 

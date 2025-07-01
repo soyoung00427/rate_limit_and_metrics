@@ -1,6 +1,6 @@
-package com.inc.ratelimiter.rule;
+package com.icd.ratelimiter.rule;
 
-import com.inc.ratelimiter.condition.RateLimitCondition;
+import com.icd.ratelimiter.condition.RateLimitCondition;
 
 import java.time.Duration;
 

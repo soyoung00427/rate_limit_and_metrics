@@ -1,4 +1,4 @@
-package com.inc.ratelimiter.storage;
+package com.icd.ratelimiter.storage;
 
 import java.time.Duration;
 import java.time.Instant;

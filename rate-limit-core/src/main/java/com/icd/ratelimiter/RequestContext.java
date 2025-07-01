@@ -1,4 +1,4 @@
-package com.inc.ratelimiter;
+package com.icd.ratelimiter;
 
 import java.time.Instant;
 import java.util.Map;

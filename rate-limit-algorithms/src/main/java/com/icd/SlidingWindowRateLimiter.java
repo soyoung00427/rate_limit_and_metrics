@@ -1,46 +1,43 @@
 package com.icd;
-//import com.ratelimit.core.RateLimiter;
+
+import com.icd.ratelimiter.RateLimiter;
+import com.icd.ratelimiter.RequestContext;
 
 import java.util.Deque;
-import java.util.LinkedList;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /*
 * 최근 N초(window) 동안 최대 x번(maxRequests) 까지 요청을 제한하는 모듈
 * */
-public class SlidingWindowRateLimiter /*implements RateLimiter */{
+public class SlidingWindowRateLimiter implements RateLimiter {
     private final int maxRequests;
     private final long windowSizeMillis;
     private final Deque<Long> requestTimestamps;
-    private final ReentrantLock lock;
 
     public SlidingWindowRateLimiter(int maxRequests, long windowSizeMillis) {
         this.maxRequests = maxRequests;
         this.windowSizeMillis = windowSizeMillis;
-        this.requestTimestamps = new LinkedList<>();
-        this.lock = new ReentrantLock();
+        this.requestTimestamps = new ConcurrentLinkedDeque<>();
     }
 
-    // @Override
-    public boolean tryAcquire() {
+    @Override
+    public boolean allow(RequestContext context) {
+        return tryAcquire();
+    }
+
+    //
+    public synchronized boolean tryAcquire() {
         long now = System.currentTimeMillis();
 
-        lock.lock();
+        // 현재 시간 기준으로 오래된 요청 삭제하기
+        cleanupOldRequests(now);
 
-        try {
-            // 현재 시간 기준으로 오래된 요청 삭제하기
-            cleanupOldRequests(now);
-
-            // 현재까지 들어온 요청 수가 maxRequests 보다 작을 떄 요청을 넣어준다
-            if (requestTimestamps.size() < maxRequests) {
-                requestTimestamps.addLast(now);
-                return true;
-            } else {
-                return false;
-            }
-        } finally {
-            lock.unlock();
+        // 현재까지 들어온 요청 수가 maxRequests 보다 작을 떄 요청을 넣어준다
+        if (requestTimestamps.size() < maxRequests) {
+            requestTimestamps.addLast(now);
+            return true;
         }
+        return false;
     }
 
     // 현재시간 기준 오래된 요청 제거
@@ -50,4 +47,6 @@ public class SlidingWindowRateLimiter /*implements RateLimiter */{
             requestTimestamps.pollFirst(); // 가장 오래된 요청 제거
         }
     }
+
+
 }

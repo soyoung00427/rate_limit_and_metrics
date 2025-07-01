@@ -1,7 +1,10 @@
 package com.icd;
 
+import com.icd.ratelimiter.RequestContext;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
+import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,7 +17,7 @@ public class SlidingWindowRateLimiterTest {
         SlidingWindowRateLimiter limiter = new SlidingWindowRateLimiter(5, 1000); // 1초에 5번
 
         for(int i = 0; i < 5; i++) {
-            assertTrue(limiter.tryAcquire(), "요청" + (i+1) + " 은 허용돼야 함");
+            assertTrue(limiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap())), "요청" + (i+1) + " 은 허용돼야 함");
         }
 
     }
@@ -22,23 +25,23 @@ public class SlidingWindowRateLimiterTest {
     @Test
     void shouldNotAllowRequestsWithoutLimit() {
         SlidingWindowRateLimiter limiter = new SlidingWindowRateLimiter(3, 1000);
-        assertTrue(limiter.tryAcquire());
-        assertTrue(limiter.tryAcquire());
-        assertTrue(limiter.tryAcquire());
+        assertTrue(limiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap())));
+        assertTrue(limiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap())));
+        assertTrue(limiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap())));
 
-        assertFalse(limiter.tryAcquire(), "4째 요청은 거절돼야함");
+        assertFalse(limiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap())), "4째 요청은 거절돼야함");
     }
 
     @Test
     void shouldAllowNewRequestsAfterOldOnesExpire() throws InterruptedException {
         SlidingWindowRateLimiter limiter = new SlidingWindowRateLimiter(2, 500);
-        assertTrue(limiter.tryAcquire());
-        assertTrue(limiter.tryAcquire());
+        assertTrue(limiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap())));
+        assertTrue(limiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap())));
 
-        assertFalse(limiter.tryAcquire());
+        assertFalse(limiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap())));
         Thread.sleep(600);
 
-        assertTrue(limiter.tryAcquire());
+        assertTrue(limiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap())));
 
     }
 
@@ -54,7 +57,7 @@ public class SlidingWindowRateLimiterTest {
 
         for (int i = 0; i < threadCount; i++) {
             new Thread(() -> {
-                boolean allowed = rateLimiter.tryAcquire();
+                boolean allowed = rateLimiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap()));
                 if (allowed) {
                     allowedCount.incrementAndGet();
                 }
@@ -84,7 +87,7 @@ public class SlidingWindowRateLimiterTest {
 
         for (int i = 0; i < totalThreads; i++) {
             new Thread(() -> {
-                if (rateLimiter.tryAcquire()) {
+                if (rateLimiter.allow(new RequestContext("key", Instant.now(), Collections.emptyMap()))) {
                     allowedCount.incrementAndGet();
                 }
                 latch.countDown();

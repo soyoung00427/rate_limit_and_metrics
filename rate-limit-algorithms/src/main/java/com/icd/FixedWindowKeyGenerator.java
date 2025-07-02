@@ -1,4 +1,4 @@
-package com.icd.ratelimiter.fixedWindow;
+package com.icd;
 
 import java.time.Duration;
 import java.time.Instant;

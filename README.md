@@ -30,14 +30,15 @@ RateLimiterStorage 인터페이스 및 MetricsCollector 추상화와 같은 유�
 rate-limiter 프로젝트는 다음과 같은 모듈로 구성되어 있으며, 각 모듈은 독립적인 기능을 수행함과 동시에 유기적으로 결합되어 포괄적인 레이트 리미팅 솔루션을 제공합니다.
 
 ```text
-1. rate-limiter-core
-2. rate-limiter-storage
-3. rate-limiter-algorithm
-4. rate-limiter-http
-5. rate-limiter-metrics
-6. rate-limiter-client
-7. rate-limiter-spring-starter
-8. rate-limiter-sample-app
+1. rate-limit-core
+2. rate-limit-storage
+3. rate-limit-algorithm
+4. rate-limit-factory
+5. rate-limit-http
+6. rate-limit-metrics
+7. rate-limit-client
+8. rate-limit-spring-starter
+9. rate-limit-sample-app
 ```
 
 
@@ -54,23 +55,31 @@ rate-limiter 프로젝트는 다음과 같은 모듈로 구성되어 있으며, 
 
 널리 사용되는 다양한 레이트 리미팅 알고리즘의 구현체를 포함하며, 각 알고리즘은 RateLimiter 인터페이스를 구현합니다.
 
-### 4. rate-limiter-http
+### 4. rate-limiter-factory
+
+다양한 Rate Limiting 알고리즘과 저장소 구현체들을 조합하여
+간편하게 `RateLimiter` 인스턴스를 생성할 수 있도록 도와주는 진입점(Entry Point) 모듈입니다.
+
+이 모듈을 통해 개발자는 복잡한 설정 없이도 필요한 알고리즘과 저장소를 연결해
+유연하고 확장 가능한 Rate Limiting 기능을 바로 사용할 수 있습니다.
+
+### 5. rate-limiter-http
 
 HTTP 요청 환경과의 연동을 위한 컴포넌트를 제공하여, 웹 애플리케이션에 레이트 리미팅을 손쉽게 적용할 수 있도록 합니다.
 
-### 5. rate-limiter-metrics
+### 6. rate-limiter-metrics
 
 레이트 리미팅 활동에 대한 로깅 및 메트릭 기능을 제공하여 시스템의 가시성을 높이고 효율적인 모니터링을 지원합니다.
 
-### 6. rate-limiter-client
+### 7. rate-limiter-client
 
 외부 API 호출 시 레이트 리미팅을 적용하기 위한 래퍼 모듈입니다.
 
-### 7. rate-limiter-spring-starter
+### 8. rate-limiter-spring-starter
 
 Spring 애플리케이션에서 어노테이션과 Spring AOP를 통해 레이트 리미팅을 선언적으로 적용할 수 있도록 돕는 모듈입니다.
 
-### 8. rate-limiter-sample-app
+### 9. rate-limiter-sample-app
 
 본 라이브러리의 실제 사용 예시 및 데모를 포함하는 프로젝트로, 향후 확장될 예정입니다.
 

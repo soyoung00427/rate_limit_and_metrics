@@ -8,6 +8,12 @@ public class RequestContext {
     private final Instant timestamp;
     private final Map<String, Object> metadata;
 
+    public RequestContext(String key, Map<String, Object> metadata) {
+        this.key = key;
+        this.timestamp = Instant.now();
+        this.metadata = metadata;
+    }
+
     public RequestContext(String key, Instant timestamp, Map<String, Object> metadata) {
         this.key = key;
         this.timestamp = timestamp;

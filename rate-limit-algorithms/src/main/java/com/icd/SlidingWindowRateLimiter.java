@@ -48,7 +48,7 @@ public class SlidingWindowRateLimiter implements RateLimiter {
     /*
     * 요청 제한이 걸릴 떄, 다음 요청은 언제 가능한지 밀리초 단위로 알려주는 메소드
     * */
-    public  long getRetryAfterMillis(RequestContext context) {
+    public long getRetryAfterMillis(RequestContext context) {
         String key = context.getKey();
         long now = getRequestTime(context);
         Deque<Long> requestTimestamps = userRequestMap.computeIfAbsent(key, k -> new ConcurrentLinkedDeque<>());
@@ -60,7 +60,10 @@ public class SlidingWindowRateLimiter implements RateLimiter {
                 return 0L;
             } else {
                 // ( 제일 처음 들어온 요청 시간 + 제한 시간 ) - 현재 시간
-                long oldest = requestTimestamps.peekFirst();
+                Long oldest = requestTimestamps.peekFirst();
+                if (oldest == null) {
+                    return 0L; // 또는 적절한 fallback
+                }
                 return (oldest + windowSizeMillis) - now;
             }
         }

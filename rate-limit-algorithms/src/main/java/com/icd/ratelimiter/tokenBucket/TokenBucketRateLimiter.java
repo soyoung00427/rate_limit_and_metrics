@@ -1,8 +1,10 @@
 package com.icd.ratelimiter.tokenBucket;
 
+import com.icd.ratelimiter.RateLimiter;
+import com.icd.ratelimiter.RequestContext;
 import com.icd.ratelimiter.storage.RateLimiterStorage;
 
-public class TokenBucketRateLimiter {
+public class TokenBucketRateLimiter implements RateLimiter {
 
     private final long capacity; //버킷 최대 크기
     private final double tokenRate; //초당 몇 개의 토큰 충전할지
@@ -14,7 +16,9 @@ public class TokenBucketRateLimiter {
         this.storage = storage;
     }
 
-    public synchronized boolean tryAcquire(String token) {
+    @Override
+    public boolean allow(RequestContext context) {
+        String key = context.getKey();
         long now = System.currentTimeMillis();
 
         //1)현재 key에 대한 상태 조회
@@ -26,7 +30,7 @@ public class TokenBucketRateLimiter {
 
         //2)토큰 충전
         long elapsedMillis = now - state.getLastRefillTimestamp();
-        double tokensToAdd = (elapsedMillis / 1000.0) * refillRate;
+        double tokensToAdd = (elapsedMillis / 1000.0) * tokenRate;
 
         if (tokensToAdd > 0) {
             long newTokens = Math.min(capacity, state.getTokens() + (long) tokensToAdd);

@@ -10,11 +10,11 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":rate-limit-core"))
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     implementation(project(":rate-limit-core"))
+    implementation(project(":rate-limit-algorithms"))
 }
 
 tasks.test {

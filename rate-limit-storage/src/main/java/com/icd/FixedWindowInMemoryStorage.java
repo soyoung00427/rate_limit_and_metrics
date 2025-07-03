@@ -1,4 +1,6 @@
-package com.icd.ratelimiter.storage;
+package com.icd;
+
+import com.icd.ratelimiter.storage.RateLimiterStorage;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -7,9 +9,11 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * FixedWindow 알고리즘
  * In-memory 기반 저장소 구현체
  */
-public class CaffeinRateLimiterStorage implements RateLimiterStorage {
+public class FixedWindowInMemoryStorage implements RateLimiterStorage {
+
     private final ConcurrentMap<String, ValueWithExpire> store = new ConcurrentHashMap<>();
 
     @Override

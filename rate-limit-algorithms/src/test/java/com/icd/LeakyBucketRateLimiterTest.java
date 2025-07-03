@@ -1,18 +1,21 @@
+package com.icd;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LeakyBucketTest {
+public class LeakyBucketRateLimiterTest {
     private final int MAX_CAPACITY = 5;
     private final int TWO_PER_SECOND = 2;
 
-    private LeakyBucket leakyBucket;
+    private LeakyBucketRateLimiter leakyBucket;
 
     @BeforeEach
     void setUp() {
-        leakyBucket = new LeakyBucket(MAX_CAPACITY, TWO_PER_SECOND);
+        leakyBucket = new LeakyBucketRateLimiter(MAX_CAPACITY, TWO_PER_SECOND);
     }
 
     @Test
@@ -32,7 +35,7 @@ public class LeakyBucketTest {
             assertTrue(leakyBucket.allow());
         }
 
-        Thread.sleep(LeakyBucket.STANDARD_PER_MILLISECOND);
+        Thread.sleep(LeakyBucketRateLimiter.STANDARD_PER_MILLISECOND);
 
         for(int i = 0; i < TWO_PER_SECOND; i++) {
             assertTrue(leakyBucket.allow());

@@ -1,4 +1,4 @@
-package com.icd.ratelimiter.tokenBucket;
+package com.icd;
 
 public class TokenBucketState {
     private long tokens; //현재 남은 토큰 수

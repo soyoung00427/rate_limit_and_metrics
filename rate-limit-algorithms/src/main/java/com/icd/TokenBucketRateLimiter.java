@@ -1,4 +1,4 @@
-package com.icd.ratelimiter.tokenBucket;
+package com.icd;
 
 import com.icd.ratelimiter.RateLimiter;
 import com.icd.ratelimiter.RequestContext;

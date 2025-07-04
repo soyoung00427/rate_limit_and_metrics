@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":rate-limit-core"))
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))

@@ -43,18 +43,6 @@ ResponseEntity<KakaoResponse> response = apiLimiter.callWithRateLimit(
 
 ---
 
-### 4. 한도 초과 시 예외 처리
-
-```java
-try {
-    apiLimiter.callWithRateLimit(context, () -> someApiClient.someCall());
-} catch (RateLimitException ex) {
-    // 한도 초과! 사용자 안내, 로깅, 재시도 등 처리
-}
-```
-
----
-
 ## 🛠️ 특징
 
 - 어떤 RateLimiter(슬라이딩윈도우, 고정윈도우, 토큰버킷 등)도 적용 가능
@@ -66,11 +54,25 @@ try {
 ## 📦 다양한 정책 적용 예시
 
 ```java
+// 1. 슬라이딩 윈도우 정책으로 API 제한기 생성
+int slidingMaxRequests = 100;
+long slidingWindowMillis = 60_000L; // 1분
+String slidingPolicyKey = "openai-api";
+
 ExternalApiRateLimiter slidingApiLimiter =
-    new ExternalApiRateLimiter(new InMemorySlidingWindowRateLimiter(...));
+        new ExternalApiRateLimiter(
+                new InMemorySlidingWindowRateLimiter(slidingMaxRequests, slidingWindowMillis, slidingPolicyKey)
+        );
+
+// 2. 고정 윈도우 정책으로 API 제한기 생성
+int fixedMaxRequests = 50;
+long fixedWindowMillis = 60_000L; // 1분
+String fixedPolicyKey = "kakao-api";
 
 ExternalApiRateLimiter fixedApiLimiter =
-    new ExternalApiRateLimiter(new FixedWindowRateLimiter(...));
+        new ExternalApiRateLimiter(
+                new FixedWindowRateLimiter(fixedMaxRequests, fixedWindowMillis, fixedPolicyKey)
+        );
 
 // 필요에 따라 여러 정책별로 인스턴스 구분 사용 가능
 ```

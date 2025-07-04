@@ -6,7 +6,9 @@ import com.icd.ratelimiter.storage.RateLimiterStorage;
 
 import java.time.Duration;
 import java.time.Instant;
-
+/*
+분산 서버 환경에서 Sliding Window 방식으로 API 요청 한도를 관리하는 RateLimiter
+ */
 public class DistributedSlidingWindowRateLimiter implements RateLimiter {
 
     private final int maxRequests;

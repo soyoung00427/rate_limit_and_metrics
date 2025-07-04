@@ -8,7 +8,9 @@ import java.util.Deque;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentMap;
-
+/*
+단일 서버 환경에서 Sliding Window 방식으로 API 요청 한도를 관리하는 RateLimiter
+ */
 public class InMemorySlidingWindowRateLimiter implements RateLimiter {
 
     private final int maxRequests;

@@ -20,8 +20,13 @@ RateLimitMetricListener metricListener = new LoggingRateLimitMetric();
 
 ```java
 // 생성자에 metricListener를 넘기거나, setter로 등록
+int maxRequests = 100;
+long windowSizeMillis = 60_000L; // 1분 = 60,000ms
+String policyKey = "openai-api";
+
 InMemorySlidingWindowRateLimiter limiter =
-    new InMemorySlidingWindowRateLimiter(..., metricListener);
+        new InMemorySlidingWindowRateLimiter(maxRequests, windowSizeMillis, policyKey);
+
 ```
 
 ---

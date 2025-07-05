@@ -45,13 +45,13 @@ public class RateLimitServletFilter implements Filter {
             if (rateLimiter.allow(context)) {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
-                //허용되지 않은 요청은 429 응답 반환
+                //거절된 요청
                 response.setStatus(429);
                 response.getWriter().write("Too Many Requests");
                 return;
             }
         } catch (Exception e) {
-            //기타 예외 발생 시 400 에러 응답 반환
+            //기타 예외
             response.setStatus(400);
             response.getWriter().write("Invalid Request: " + e.getMessage());
         }

@@ -16,7 +16,6 @@ public class FixedWindowInMemoryStorage implements RateLimiterStorage {
 
     private final ConcurrentMap<String, ValueWithExpire> store = new ConcurrentHashMap<>();
 
-    @Override
     public long incrementAndGet(String key, Instant windowStart, Duration window) {
         String fullKey = key + ":" + windowStart.toString();
         ValueWithExpire value = store.compute(fullKey, (k, existing) -> {
@@ -30,7 +29,6 @@ public class FixedWindowInMemoryStorage implements RateLimiterStorage {
         return value.counter.get();
     }
 
-    @Override
     public long getCount(String key, Instant windowStart) {
         String fullKey = key + ":" + windowStart.toString();
         ValueWithExpire value = store.get(fullKey);
@@ -40,7 +38,6 @@ public class FixedWindowInMemoryStorage implements RateLimiterStorage {
         return value.counter.get();
     }
 
-    @Override
     public void cleanup() {
         Instant now = Instant.now();
         store.entrySet().removeIf(entry -> entry.getValue().expireAt.isBefore(now));

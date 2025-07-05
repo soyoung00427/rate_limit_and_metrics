@@ -15,6 +15,7 @@ dependencies {
 
     implementation(project(":rate-limit-core"))
     implementation(project(":rate-limit-algorithms"))
+    implementation(project(":rate-limit-storage"))
 }
 
 tasks.test {

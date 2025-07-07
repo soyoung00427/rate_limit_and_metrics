@@ -4,17 +4,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "rate-limiter")
 public class RateLimiterProperties {
-    /**
-     * 버킷 최대 용량
-     */
+    //버킷 최대 용량
     private long capacity = 10;
 
-    /**
-     * 초당 리필되는 토큰 수
-     */
+    //초당 리필되는 토큰 수
     private double refillRate = 5.0;
 
-    // Getter/Setter
     public long getCapacity() {
         return capacity;
     }

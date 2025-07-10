@@ -12,7 +12,8 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.4")
+        // Spring Boot 2.7.x에 호환되는 Spring Cloud BOM
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2021.0.8")
     }
 }
 
